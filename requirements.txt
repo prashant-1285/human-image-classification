@@ -1,0 +1,5 @@
+split-folders
+tensorflow==1.14.0
+keras==2.3.1
+image
+opencv-python
