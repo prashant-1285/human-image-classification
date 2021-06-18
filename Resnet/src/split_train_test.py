@@ -5,7 +5,7 @@ import argparse
 import splitfolders
 
 def main(args):
-     splitfolders.ratio(args.input_dir, args.output_dir, seed=1337, ratio=(.8, .1, .1), group_prefix=None) # default values
+     splitfolders.ratio(args.input_dir, args.output_dir, seed=1337, ratio=(.7, .2, .1), group_prefix=None) # default values
 
 if __name__ == "__main__":
  

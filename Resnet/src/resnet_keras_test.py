@@ -13,7 +13,7 @@ from keras.callbacks import EarlyStopping,ModelCheckpoint
 from keras.layers import MaxPool2D
 import config as cfg
 import argparse
-import image
+#import image
 K.tensorflow_backend._get_available_gpus()
 from keras.models import load_model
 from keras.preprocessing.image import ImageDataGenerator
@@ -21,6 +21,7 @@ def main(args):
     #Provide path
     test_dir=args.test_dir
     output_weight=args.output_weight
+    print("outputweight is",output_weight)
     image_dir=args.image_dir
     #Test data generator 
     test_datagen = ImageDataGenerator()
@@ -31,13 +32,15 @@ def main(args):
     #evaluate model on test data
     score=model_test.evaluate_generator(test_generator)
     print("loss: %.3f - acc: %.3f" % (score[0], score[1]))
-
+    print("List of image directory",image_dir)
     if image_dir is not None:
         for filename in os.listdir(image_dir):
             image = cv2.imread(os.path.join(image_dir,filename))
             image = cv2.resize(image, (224,224))
             image_exp=np.expand_dims(image,axis=0)
-            classes=model_test.predict_classes(image_exp)
+            #classes=model_test.predict_classes(image_exp)
+            predict_prob=model_test.predict(image_exp)
+            classes=np.argmax(predict_prob,axis=1)
             for key in label_map:
                 if label_map[key]==classes[0]:
                     print("The image {} is of :{}".format(filename,key))
